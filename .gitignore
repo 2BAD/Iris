@@ -32,6 +32,3 @@ npm-debug.log
 
 # Serverless directories
 .serverless
-
-# Webpack directories
-.webpack
