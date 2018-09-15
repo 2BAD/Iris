@@ -46,7 +46,10 @@
     "node": ">=8.1.0"
   },
   "main": "dist/iris.cjs.js",
-  "module": "dist/iris.esm.js",
+  "module": "dist/iris.es.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rollup -c",
     "lint": "standard | snazzy",
