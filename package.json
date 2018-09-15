@@ -48,8 +48,10 @@
   "main": "dist/iris.cjs.js",
   "module": "dist/iris.esm.js",
   "scripts": {
+    "build": "rollup -c",
     "lint": "standard | snazzy",
-    "test": "jest"
+    "test": "jest",
+    "pretest": "npm run lint && npm run build"
   },
   "babel": {
     "presets": [
