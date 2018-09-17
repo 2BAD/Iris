@@ -15,13 +15,13 @@
   },
   "license": "2BAD © 2018",
   "keywords": [
-    "serverless",
-    "lambda",
     "aws",
-    "es6",
     "babel",
+    "es6",
+    "jest",
+    "lambda",
     "rollup",
-    "jest"
+    "serverless"
   ],
   "dependencies": {
     "got": "9.2.2"
@@ -53,12 +53,12 @@
     "dist"
   ],
   "scripts": {
-    "start": "node dist/iris.cjs.js",
-    "prestart": "npm run test",
     "build": "rollup -c",
     "lint": "standard | snazzy",
-    "test": "",
-    "pretest": "npm run lint && npm run build"
+    "prestart": "npm run test",
+    "pretest": "npm run lint && npm run build",
+    "start": "node dist/iris.cjs.js",
+    "test": ""
   },
   "babel": {
     "presets": [
