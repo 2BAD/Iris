@@ -35,6 +35,7 @@
     "babel-loader": "8.0.2",
     "babel-preset-env": "1.7.0",
     "debug": "4.0.1",
+    "esm": "3.0.83",
     "jest": "23.6.0",
     "rollup": "0.65.2",
     "rollup-plugin-babel": "4.0.3",
@@ -46,7 +47,7 @@
     "node": ">=8.1.0"
   },
   "main": "dist/iris.cjs.js",
-  "module": "dist/iris.es.js",
+  "module": "dist/iris.esm.js",
   "files": [
     "dist"
   ],
