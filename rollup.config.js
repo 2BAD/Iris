@@ -13,7 +13,7 @@ export default [
       })
     ],
     external: [
-      'util', 'tty', 'os'
+      'util', 'tty', 'os', 'fs', 'got'
     ],
     input: 'source/main.js',
     output: [
