@@ -53,9 +53,11 @@
     "dist"
   ],
   "scripts": {
+    "start": "node dist/iris.cjs.js",
+    "prestart": "npm run test",
     "build": "rollup -c",
     "lint": "standard | snazzy",
-    "test": "jest",
+    "test": "",
     "pretest": "npm run lint && npm run build"
   },
   "babel": {
