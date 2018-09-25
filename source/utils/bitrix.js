@@ -53,7 +53,7 @@ export const getDataByBatch = async (resource, total) => {
       return [cmd, str]
     }))
 
-    requests.push(client.get('batch', { query }).then(response => response.body.result.result))
+    requests.push(getData('batch', query).then(data => data.result.result))
   }
 
   return Promise.all(requests).then(data => flat(data, 2))
