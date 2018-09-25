@@ -35,6 +35,24 @@ export const getDataByPage = async (resource, total) => {
   // wait for all requests to finish and return flatten data to single level array
   return Promise.all(requests).then(data => flat(data))
 }
+
+export const getDataByBatch = async (resource, total) => {
+  const requests = []
+
+  for (let i = 0; i <= total; i += 2500) {
+    // let pages = i % 2500 || 2500
+
+    let query = fromEntries(Array.from({ length: 50 }, (v, i) => {
+      const cmd = `cmd[${i}]`
+      const str = `${resource}?start=${(i + 1) * 50}`
+
+      return [cmd, str]
+    }))
+
+    requests.push(client.get('batch', { query }).then(response => response.body.result.result))
+  }
+
+  return Promise.all(requests).then(data => flat(data, 2))
 }
 
 export const getData = async (resource) => {
