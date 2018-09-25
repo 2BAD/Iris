@@ -59,7 +59,7 @@ export const getDataByBatch = async (resource, total) => {
   return Promise.all(requests).then(data => flat(data, 2))
 }
 
-export const getData = async (resource) => {
+export const fetch = async (resource) => {
   const total = await getTotal(resource)
 
   return (total <= 50) ? getDataByPage(resource, total) : getDataByBatch(resource, total)
