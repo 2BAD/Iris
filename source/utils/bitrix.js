@@ -1,5 +1,6 @@
 import got from 'got'
 import fromEntries from './type/fromEntries.js'
+import flat from 'lodash/flattenDepth'
 import { version } from './../../package.json'
 
 const TOKEN = ''
@@ -32,7 +33,7 @@ export const getDataByPage = async (resource, total) => {
   }
 
   // wait for all requests to finish and return flatten data to single level array
-  return Promise.all(requests).then(data => [].concat(...data))
+  return Promise.all(requests).then(data => flat(data))
 }
 }
 
