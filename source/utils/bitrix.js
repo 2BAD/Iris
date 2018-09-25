@@ -32,7 +32,7 @@ export const getDataByPage = async (resource, total) => {
   }
 
   // wait for all requests to finish and return flatten data to single level array
-  return Promise.all(requests).then(data => Array.concat(...data))
+  return Promise.all(requests).then(data => [].concat(...data))
 }
 }
 
