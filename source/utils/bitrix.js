@@ -35,4 +35,9 @@ export const getDataByPage = async (resource, total) => {
   return Promise.all(requests).then(data => Array.concat(...data))
 }
 }
+
+export const getData = async (resource) => {
+  const total = await getTotal(resource)
+
+  return (total <= 50) ? getDataByPage(resource, total) : getDataByBatch(resource, total)
 }
