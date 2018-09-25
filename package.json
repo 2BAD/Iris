@@ -24,7 +24,8 @@
     "serverless"
   ],
   "dependencies": {
-    "got": "9.2.2"
+    "got": "9.2.2",
+    "lodash-es": "4.17.11"
   },
   "devDependencies": {
     "@babel/core": "7.0.1",
