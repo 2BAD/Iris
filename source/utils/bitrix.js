@@ -22,8 +22,9 @@ const client = got.extend({
   }
 })
 
-export const getTotal = async (resource) => client.get(resource).then(response => response.body.total)
+export const getData = async (resource, query) => client.get(resource, { query }).then(response => response.body)
 
+export const getTotal = async (resource) => getData(resource).then(data => data.total)
 export const getDataByPage = async (resource, total) => {
   const requests = []
 
