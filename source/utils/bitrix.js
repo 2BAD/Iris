@@ -25,12 +25,15 @@ const client = got.extend({
 export const getData = async (resource, query) => client.get(resource, { query }).then(response => response.body)
 
 export const getTotal = async (resource) => getData(resource).then(data => data.total)
+
 export const getDataByPage = async (resource, total) => {
+  let query = {}
   const requests = []
 
   // generate array of requests
   for (let i = 0; i <= total; i += 50) {
-    requests.push(client.get(resource, { query: { start: i } }).then(response => response.body.result))
+    query = { start: i }
+    requests.push(getData(resource, query).then(data => data.result))
   }
 
   // wait for all requests to finish and return flatten data to single level array
