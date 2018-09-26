@@ -5,6 +5,9 @@ import { version } from './../../package.json'
 
 const TOKEN = ''
 const REST_URI = 'https://portal.bitrix24.ru/rest/'
+const MAX_ENTRIES_PER_PAGE = 50
+const MAX_PAGES_PER_BATCH = 50
+const MAX_ENTRIES_PER_BATCH = MAX_ENTRIES_PER_PAGE * MAX_PAGES_PER_BATCH
 
 const client = got.extend({
   baseUrl: REST_URI,
@@ -31,7 +34,7 @@ export const getDataByPage = async (resource, total) => {
   const requests = []
 
   // generate array of requests
-  for (let i = 0; i <= total; i += 50) {
+  for (let i = 0; i <= total; i += MAX_ENTRIES_PER_PAGE) {
     query = { start: i }
     requests.push(getData(resource, query).then(data => data.result))
   }
@@ -62,5 +65,5 @@ export const getDataByBatch = async (resource, total) => {
 export const fetch = async (resource) => {
   const total = await getTotal(resource)
 
-  return (total <= 50) ? getDataByPage(resource, total) : getDataByBatch(resource, total)
+  return (total <= MAX_ENTRIES_PER_PAGE) ? getDataByPage(resource, total) : getDataByBatch(resource, total)
 }
