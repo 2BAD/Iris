@@ -1,6 +1,6 @@
 import got from 'got'
-import fromEntries from './type/fromEntries.js'
 import flat from 'lodash/flattenDepth'
+import fromEntries from './type/fromEntries.js'
 import { version } from './../../package.json'
 
 const TOKEN = ''
@@ -55,10 +55,10 @@ export const getDataByBatch = async (resource, total) => {
     // generate query object from fixed size array of key-value pairs
     query = fromEntries(Array.from({ length: pages }, (v, i) => {
       const cmd = `cmd[${i}]`
-      const str = `${resource}?start=${i * MAX_ENTRIES_PER_PAGE}`
-      console.log(str)
+      const str = `${resource}?start=${processed + i * MAX_ENTRIES_PER_PAGE}`
       return [cmd, str]
     }))
+
     requests.push(getData('batch', query).then(data => data.result.result))
   }
 
