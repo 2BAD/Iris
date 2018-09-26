@@ -44,21 +44,25 @@ export const getDataByPage = async (resource, total) => {
 }
 
 export const getDataByBatch = async (resource, total) => {
+  let query = {}
   const requests = []
 
-  for (let i = 0; i <= total; i += 2500) {
-    // let pages = i % 2500 || 2500
+  // generate a batch request for each 2500 entries
+  for (let processed = 0; processed <= total; processed += MAX_ENTRIES_PER_BATCH) {
+    let remaining = total - processed
+    let pages = remaining > MAX_ENTRIES_PER_BATCH ? MAX_PAGES_PER_BATCH : Math.ceil(remaining / MAX_ENTRIES_PER_PAGE)
 
-    let query = fromEntries(Array.from({ length: 50 }, (v, i) => {
+    // generate query object from fixed size array of key-value pairs
+    query = fromEntries(Array.from({ length: pages }, (v, i) => {
       const cmd = `cmd[${i}]`
-      const str = `${resource}?start=${(i + 1) * 50}`
-
+      const str = `${resource}?start=${i * MAX_ENTRIES_PER_PAGE}`
+      console.log(str)
       return [cmd, str]
     }))
-
     requests.push(getData('batch', query).then(data => data.result.result))
   }
 
+  // wait for all requests to finish and return flatten to single level data array
   return Promise.all(requests).then(data => flat(data, 2))
 }
 
