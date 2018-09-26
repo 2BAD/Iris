@@ -39,8 +39,8 @@ export const getDataByPage = async (resource, total) => {
     requests.push(getData(resource, query).then(data => data.result))
   }
 
-  // wait for all requests to finish and return flatten data to single level array
-  return Promise.all(requests).then(data => flat(data))
+  // wait for all requests to finish and return flatten to single level array data array
+  return Promise.all(requests).then(data => flat(data, 1))
 }
 
 export const getDataByBatch = async (resource, total) => {
