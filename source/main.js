@@ -6,6 +6,18 @@ const TOKEN = process.env.TOKEN
 
 const bx = new Bitrix(REST_URI, TOKEN)
 
-bx.fetch('crm.deal.list')
-  .then(data => saveToFile('deals.json', data))
-  .catch(error => console.log(error))
+const resources = {
+  'crm.deal.list': 'deals.json',
+  'crm.lead.list': 'leads.json',
+  'crm.company.list': 'companies.json',
+  'crm.contact.list': 'contacts.json',
+  'crm.product.list': 'products.json',
+  'crm.status.list': 'statuses.json',
+  'user.get': 'users.json'
+}
+
+Object.keys(resources).forEach(key => {
+  bx.fetch(key)
+    .then(data => saveToFile(resources[key], data))
+    .catch(error => console.log(error))
+})
