@@ -24,7 +24,8 @@
     "serverless"
   ],
   "dependencies": {
-    "@2bad/iris.crm.bitrix": "1.0.1"
+    "@2bad/iris.crm.bitrix": "1.0.1",
+    "aws-sdk": "2.334.0"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",
