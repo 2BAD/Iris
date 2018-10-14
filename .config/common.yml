@@ -1,0 +1,3 @@
+functionTags:
+  project: ${self:custom.name}
+  scope: function
