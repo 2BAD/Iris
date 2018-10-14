@@ -1,6 +1,6 @@
 {
   "name": "iris",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "REST API service gate between Bitrix24 and Power BI",
   "homepage": "https://github.com/2BAD/iris#readme",
   "twitter": "@2BAD",
@@ -24,8 +24,7 @@
     "serverless"
   ],
   "dependencies": {
-    "got": "9.2.2",
-    "lodash": "4.17.11"
+    "@2bad/iris.crm.bitrix": "1.0.1"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",

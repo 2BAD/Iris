@@ -1,4 +1,4 @@
-import Bitrix from './utils/bitrix.js'
+import Bitrix from '@2bad/iris.crm.bitrix'
 import saveToFile from './utils/fs/saveToFile.js'
 
 const REST_URI = process.env.REST_URI
