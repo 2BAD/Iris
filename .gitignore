@@ -30,5 +30,8 @@ results
 node_modules
 npm-debug.log
 
-# Serverless directories
+## Serverless directories
 .serverless
+
+## Build files
+build
