@@ -1,0 +1,73 @@
+frameworkVersion: "=1.32.0"
+
+service: ${self:custom.name}
+app: ${self:custom.name}
+tenant: toobad
+
+# define custom variables
+custom:
+  name: ${file(./.config/${self:custom.stage}.yml):name}
+  stage: ${opt:stage, 'development'}
+  domain: ${file(./.config/${self:custom.stage}.yml):domain}
+  version: v1
+  region: ${file(./.config/${self:custom.stage}.yml):region}
+  crmDataBucket: ${self:custom.name}-${self:custom.stage}-crm-data
+  customDomain:
+    domainName: ${self:custom.domain}
+    basePath: ${self:custom.version}
+    stage: ${self:custom.stage}
+    createRoute53Record: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${self:custom.stage}
+  region: ${self:custom.region}
+  memorySize: 256
+  stackName: ${self:custom.name}-${self:custom.stage}
+  apiName: ${self:custom.name}-${self:custom.stage}
+  deploymentBucket:
+    name: ${self:custom.domain}
+  versionFunctions: false
+  environment:
+    REGION: ${self:provider.region}
+  tags:
+    project: ${self:custom.name}
+    scope: backend
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:ListBucket
+      Resource: "arn:aws:s3:::${self:custom.crmDataBucket}"
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+        - s3:GetObject
+        - s3:DeleteObject
+      Resource: "arn:aws:s3:::${self:custom.crmDataBucket}/*"
+
+package:
+  include:
+    - dist/**
+  exclude:
+    - source/**
+    - .config
+
+functions:
+  iris-main:
+    handler: dist/iris.main
+    name: ${self:custom.stage}-iris-main
+    tags: ${file(./.config/common.yml):functionTags}
+    events:
+      - http:
+          path: iris
+          method: get
+          cors: true
+
+resources:
+  Resources:
+    NewResource:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.crmDataBucket}
