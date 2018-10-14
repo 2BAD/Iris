@@ -15,7 +15,13 @@ export default [
       })
     ],
     external: [
-      'util', 'tty', 'os', 'fs', 'got'
+      'util',
+      'tty',
+      'os',
+      'fs',
+      'got',
+      '@2bad/iris.crm.bitrix',
+      'aws-sdk'
     ],
     input: 'source/main.js',
     output: [
