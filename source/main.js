@@ -4,20 +4,41 @@ import saveToFile from './utils/fs/saveToFile.js'
 const REST_URI = process.env.REST_URI
 const TOKEN = process.env.TOKEN
 
-const bx = new Bitrix(REST_URI, TOKEN)
+const bitrix = new Bitrix(REST_URI, TOKEN)
 
-const resources = {
-  'crm.deal.list': 'deals.json',
-  'crm.lead.list': 'leads.json',
-  'crm.company.list': 'companies.json',
-  'crm.contact.list': 'contacts.json',
-  'crm.product.list': 'products.json',
-  'crm.status.list': 'statuses.json',
-  'user.get': 'users.json'
-}
+const resources = [
+  {
+    method: 'crm.deal.list',
+    filename: './data/deals.json'
+  },
+  {
+    method: 'crm.lead.list',
+    filename: './data/leads.json'
+  },
+  {
+    method: 'crm.company.list',
+    filename: './data/companies.json'
+  },
+  {
+    method: 'crm.contact.list',
+    filename: './data/contacts.json'
+  },
+  {
+    method: 'crm.product.list',
+    filename: './data/products.json'
+  },
+  {
+    method: 'crm.status.list',
+    filename: './data/statuses.json'
+  },
+  {
+    method: 'user.get',
+    filename: './data/users.json'
+  }
+]
 
-Object.keys(resources).forEach(key => {
-  bx.fetch(key)
-    .then(data => saveToFile(resources[key], data))
+resources.forEach(resource => {
+  bitrix.fetch(resource.method)
+    .then(data => saveToFile(resource.filename, data))
     .catch(error => console.log(error))
 })
