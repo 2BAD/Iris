@@ -2,7 +2,7 @@ import AWS from 'aws-sdk'
 import Bitrix from '@2bad/iris.crm.bitrix'
 import { success, failure } from './utils/response.js'
 
-export const main = async (event, context, callback) => {
+export const main = async (event, context) => {
   const REST_URI = event.queryStringParameters.REST_URI
   const TOKEN = event.queryStringParameters.TOKEN
 
@@ -19,8 +19,8 @@ export const main = async (event, context, callback) => {
     }
 
     await S3.putObject(options).promise()
-    callback(null, success('file saved'))
+    return success('file saved')
   } catch (e) {
-    callback(null, failure(e.statusCode, e))
+    return failure(e.statusCode, e)
   }
 }
