@@ -1,44 +1,26 @@
+import AWS from 'aws-sdk'
 import Bitrix from '@2bad/iris.crm.bitrix'
-import saveToFile from './utils/fs/saveToFile.js'
+import { success, failure } from './utils/response.js'
 
-const REST_URI = process.env.REST_URI
-const TOKEN = process.env.TOKEN
+export const main = async (event, context, callback) => {
+  const REST_URI = event.queryStringParameters.REST_URI
+  const TOKEN = event.queryStringParameters.TOKEN
 
-const bitrix = new Bitrix(REST_URI, TOKEN)
+  const bitrix = new Bitrix(REST_URI, TOKEN)
+  const S3 = new AWS.S3()
 
-const resources = [
-  {
-    method: 'crm.deal.list',
-    filename: './data/deals.json'
-  },
-  {
-    method: 'crm.lead.list',
-    filename: './data/leads.json'
-  },
-  {
-    method: 'crm.company.list',
-    filename: './data/companies.json'
-  },
-  {
-    method: 'crm.contact.list',
-    filename: './data/contacts.json'
-  },
-  {
-    method: 'crm.product.list',
-    filename: './data/products.json'
-  },
-  {
-    method: 'crm.status.list',
-    filename: './data/statuses.json'
-  },
-  {
-    method: 'user.get',
-    filename: './data/users.json'
+  try {
+    const result = await bitrix.fetch('user.get')
+
+    const options = {
+      Bucket: process.env.DATA_BUCKET,
+      Key: 'users.json',
+      Body: JSON.stringify(result)
+    }
+
+    await S3.putObject(options).promise()
+    callback(null, success('file saved'))
+  } catch (e) {
+    callback(null, failure(e.statusCode, e))
   }
-]
-
-resources.forEach(resource => {
-  bitrix.fetch(resource.method)
-    .then(data => saveToFile(resource.filename, data))
-    .catch(error => console.log(error))
-})
+}
