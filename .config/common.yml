@@ -1,3 +1,5 @@
+deploymentBucket: me.2bad.iris
+crmDataBucket: me.2bad.iris.data
 functionTags:
   project: ${self:custom.name}
   scope: function

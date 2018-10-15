@@ -11,7 +11,8 @@ custom:
   domain: ${file(./.config/${self:custom.stage}.yml):domain}
   version: v1
   region: ${file(./.config/${self:custom.stage}.yml):region}
-  crmDataBucket: ${self:custom.name}-${self:custom.stage}-crm-data
+  crmDataBucket: ${file(./.config/common.yml):crmDataBucket}
+  deploymentBucket: ${file(./.config/common.yml):deploymentBucket}
   customDomain:
     domainName: ${self:custom.domain}
     basePath: ${self:custom.version}
@@ -26,11 +27,12 @@ provider:
   memorySize: 256
   stackName: ${self:custom.name}-${self:custom.stage}
   apiName: ${self:custom.name}-${self:custom.stage}
-  deploymentBucket:
-    name: ${self:custom.domain}
   versionFunctions: false
+  deploymentBucket:
+    name: ${self:custom.deploymentBucket}
   environment:
     REGION: ${self:provider.region}
+    DATA_BUCKET: ${self:custom.crmDataBucket}
   tags:
     project: ${self:custom.name}
     scope: backend
@@ -49,14 +51,14 @@ provider:
 
 package:
   include:
-    - dist/**
+    - build/**
   exclude:
     - source/**
     - .config
 
 functions:
   iris-main:
-    handler: dist/iris.main
+    handler: build/iris.main
     name: ${self:custom.stage}-iris-main
     tags: ${file(./.config/common.yml):functionTags}
     events:
