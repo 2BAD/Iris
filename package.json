@@ -1,6 +1,6 @@
 {
   "name": "iris",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "REST API service gate between Bitrix24 and Power BI",
   "homepage": "https://github.com/2BAD/iris#readme",
   "twitter": "@2BAD",
