@@ -51,11 +51,10 @@ provider:
       Resource: "arn:aws:s3:::${self:custom.crmDataBucket}/*"
 
 package:
-  include:
-    - build/**
   exclude:
     - source/**
-    - .config
+    - .config/**
+    - '*.{md,js,json,sublime-*,*config}'
 
 functions:
   iris-main:
