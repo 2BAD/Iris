@@ -12,8 +12,8 @@ const save = (data, filename) => {
   return S3.putObject(options).promise()
 }
 
-const read =(filename) => {
-  const S3 = AWS.S3()
+const read = (filename) => {
+  const S3 = new AWS.S3()
 
   const options = {
     Bucket: process.env.DATA_BUCKET,
