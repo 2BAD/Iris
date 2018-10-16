@@ -57,9 +57,15 @@ package:
     - '*.{md,js,json,sublime-*,*config}'
 
 functions:
-  iris-main:
-    handler: build/iris.main
-    name: ${self:custom.stage}-iris-main
+  sync:
+    handler: build/iris.sync
+    name: ${self:custom.stage}-iris-sync
+    tags: ${file(./.config/common.yml):functionTags}
+    events:
+      - http:
+          path: iris/sync
+          method: get
+          cors: true
     tags: ${file(./.config/common.yml):functionTags}
     events:
       - http:

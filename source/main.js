@@ -1,7 +1,7 @@
 import bitrix from './crm/bitrix.js'
 import { success, failure } from './utils/response.js'
 
-export const main = async (event, context) => {
+export const sync = async (event, context) => {
   const REST_URI = event.queryStringParameters.REST_URI
   const TOKEN = event.queryStringParameters.TOKEN
 
