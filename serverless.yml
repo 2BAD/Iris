@@ -25,6 +25,7 @@ provider:
   stage: ${self:custom.stage}
   region: ${self:custom.region}
   memorySize: 256
+  timeout: 15
   stackName: ${self:custom.name}-${self:custom.stage}
   apiName: ${self:custom.name}-${self:custom.stage}
   versionFunctions: false
