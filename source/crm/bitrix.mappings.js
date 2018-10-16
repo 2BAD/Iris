@@ -1,4 +1,4 @@
-export const resources = [
+const resources = [
   {
     method: 'crm.deal.list',
     filename: 'data/deals.json'
@@ -28,3 +28,5 @@ export const resources = [
     filename: 'data/users.json'
   }
 ]
+
+export default resources
