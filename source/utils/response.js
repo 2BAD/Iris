@@ -19,7 +19,7 @@ function failure (code = 500, body, type = 'json', headers = {}) {
 function wrap (code, body, type, headers) {
   return {
     statusCode: code,
-    headers: {...cors, ...headers},
+    headers: { ...cors, ...headers },
     body: (type === 'json') ? JSON.stringify(body) : body
   }
 }
