@@ -1,36 +1,36 @@
 const resources = [
   {
-    name: 'deals',
+    name: 'Deals',
     method: 'crm.deal.list',
     filename: 'data/deals.json'
   },
   {
-    name: 'leads',
+    name: 'Leads',
     method: 'crm.lead.list',
     filename: 'data/leads.json'
   },
   {
-    name: 'companies',
+    name: 'Companies',
     method: 'crm.company.list',
     filename: 'data/companies.json'
   },
   {
-    name: 'contacts',
+    name: 'Contacts',
     method: 'crm.contact.list',
     filename: 'data/contacts.json'
   },
   {
-    name: 'products',
+    name: 'Products',
     method: 'crm.product.list',
     filename: 'data/products.json'
   },
   {
-    name: 'statuses',
+    name: 'Statuses',
     method: 'crm.status.list',
     filename: 'data/statuses.json'
   },
   {
-    name: 'users',
+    name: 'Users',
     method: 'user.get',
     filename: 'data/users.json'
   }
