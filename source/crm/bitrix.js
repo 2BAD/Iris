@@ -18,9 +18,21 @@ const fetch = async (name) => {
   return storage.read(resource.filename)
 }
 
+// generate list of entities for root listing
+const entities = () => {
+  return resources.map(resource => {
+    return {
+      name: resource.name,
+      kind: 'EntitySet',
+      url: resource.name
+    }
+  })
+}
+
 const bitrix = {
   dump,
-  fetch
+  fetch,
+  entities
 }
 
 export default bitrix

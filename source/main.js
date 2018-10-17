@@ -23,3 +23,10 @@ export const fetch = async (event, context) => {
     return response.failure(e.statusCode, e)
   }
 }
+
+export const list = async (event, context) => {
+  const headers = {
+    'OData-Version': '4.0'
+  }
+  return response.success(odata.wrap(bitrix.entities()), 'json', headers)
+}

@@ -66,6 +66,15 @@ functions:
           path: iris/sync
           method: get
           cors: true
+  list:
+    handler: build/iris.list
+    name: ${self:custom.stage}-iris-list
+    tags: ${file(./.config/common.yml):functionTags}
+    events:
+      - http:
+          path: iris/odata/
+          method: get
+          cors: true
   fetch:
     handler: build/iris.fetch
     name: ${self:custom.stage}-iris-fetch
