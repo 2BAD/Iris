@@ -1,8 +1,8 @@
 import AWS from 'aws-sdk'
+const S3 = new AWS.S3()
 
-const save = (data, filename) => {
-  const S3 = new AWS.S3()
-
+// write data to S3 object storage
+const write = (filename, data) => {
   const options = {
     Bucket: process.env.DATA_BUCKET,
     Key: filename,
@@ -12,9 +12,8 @@ const save = (data, filename) => {
   return S3.putObject(options).promise()
 }
 
+// read data from S3 object storage
 const read = (filename) => {
-  const S3 = new AWS.S3()
-
   const options = {
     Bucket: process.env.DATA_BUCKET,
     Key: filename
@@ -23,9 +22,9 @@ const read = (filename) => {
   return S3.getObject(options).promise()
 }
 
-const s3 = {
-  save,
+const storage = {
+  write,
   read
 }
 
-export default s3
+export default storage
