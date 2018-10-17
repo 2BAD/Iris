@@ -75,13 +75,22 @@ functions:
           path: iris/odata/
           method: get
           cors: true
+  metadata:
+    handler: build/iris.metadata
+    name: ${self:custom.stage}-iris-metadata
+    tags: ${file(./.config/common.yml):functionTags}
+    events:
+      - http:
+          path: iris/odata/$metadata
+          method: get
+          cors: true
   fetch:
     handler: build/iris.fetch
     name: ${self:custom.stage}-iris-fetch
     tags: ${file(./.config/common.yml):functionTags}
     events:
       - http:
-          path: iris/fetch/{resource}
+          path: iris/odata/{resource}
           method: get
           cors: true
 
