@@ -1,3 +1,4 @@
+import odata from './odata.js'
 import bitrix from './crm/bitrix.js'
 import { success, failure } from './utils/response.js'
 
@@ -16,7 +17,8 @@ export const sync = async (event, context) => {
 export const fetch = async (event, context) => {
   try {
     const data = await bitrix.fetch(event.pathParameters.resource)
-    return success(JSON.parse(data.Body.toString()))
+    const result = JSON.parse(data.Body.toString())
+    return success(odata.wrap(result))
   } catch (e) {
     return failure(e.statusCode, e)
   }
