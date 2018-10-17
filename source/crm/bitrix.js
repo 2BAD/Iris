@@ -1,24 +1,21 @@
-import s3 from '../s3.js'
+import storage from '../storage.js'
 import Bitrix from '@2bad/iris.crm.bitrix'
 import resources from './bitrix.mappings.js'
 
+// dump all data from crm rest api to storage as json files
 const dump = async (REST_URI, TOKEN) => {
   const bitrix = new Bitrix(REST_URI, TOKEN)
 
   return Promise.all(resources.map(async resource => {
-    console.time(`awaiting ${resource.method}`)
     const result = await bitrix.fetch(resource.method)
-    console.timeEnd(`awaiting ${resource.method}`)
-
-    console.time(`saving ${resource.filename} (${result.length} entries)`)
-    await s3.save(result, resource.filename)
-    console.timeEnd(`saving ${resource.filename} (${result.length} entries)`)
+    await storage.write(resource.filename, result)
   }))
 }
 
+// read data from storage
 const fetch = async (name) => {
   const resource = resources.filter(resource => resource.name === name)[0]
-  return s3.read(resource.filename)
+  return storage.read(resource.filename)
 }
 
 const bitrix = {
