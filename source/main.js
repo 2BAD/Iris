@@ -12,3 +12,12 @@ export const sync = async (event, context) => {
     return failure(e.statusCode, e)
   }
 }
+
+export const fetch = async (event, context) => {
+  try {
+    const data = await bitrix.fetch(event.pathParameters.resource)
+    return success(JSON.parse(data.Body.toString()))
+  } catch (e) {
+    return failure(e.statusCode, e)
+  }
+}

@@ -16,8 +16,14 @@ const dump = async (REST_URI, TOKEN) => {
   }))
 }
 
+const fetch = async (name) => {
+  const resource = resources.filter(resource => resource.name === name)[0]
+  return s3.read(resource.filename)
+}
+
 const bitrix = {
-  dump
+  dump,
+  fetch
 }
 
 export default bitrix
