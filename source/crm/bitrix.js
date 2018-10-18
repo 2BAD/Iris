@@ -4,10 +4,10 @@ import resources from './bitrix.mappings.js'
 
 // dump all data from crm rest api to storage as json files
 const dump = (REST_URI, TOKEN) => {
-  const bitrix = new Bitrix(REST_URI, TOKEN)
+  const api = new Bitrix(REST_URI, TOKEN)
 
   return Promise.all(resources.map(resource =>
-    bitrix.fetch(resource.method)
+    api.fetch(resource.method)
       .then(data => storage.write(resource.filename, data))
   ))
 }
