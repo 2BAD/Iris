@@ -3,31 +3,28 @@ import Bitrix from '@2bad/iris.crm.bitrix'
 import resources from './bitrix.mappings.js'
 
 // dump all data from crm rest api to storage as json files
-const dump = async (REST_URI, TOKEN) => {
+const dump = (REST_URI, TOKEN) => {
   const bitrix = new Bitrix(REST_URI, TOKEN)
 
-  return Promise.all(resources.map(async resource => {
-    const result = await bitrix.fetch(resource.method)
-    await storage.write(resource.filename, result)
-  }))
+  return Promise.all(resources.map(resource =>
+    bitrix.fetch(resource.method)
+      .then(data => storage.write(resource.filename, data))
+  ))
 }
 
 // read data from storage
-const fetch = async (name) => {
-  const resource = resources.filter(resource => resource.name === name)[0]
+const fetch = (name) => {
+  const resource = resources.find(resource => resource.name === name)
   return storage.read(resource.filename)
 }
 
 // generate list of entities for root listing
-const entities = () => {
-  return resources.map(resource => {
-    return {
-      name: resource.name,
-      kind: 'EntitySet',
-      url: resource.name
-    }
-  })
-}
+const entities = () => resources
+  .map(resource => ({
+    name: resource.name,
+    kind: 'EntitySet',
+    url: resource.name
+  }))
 
 const bitrix = {
   dump,
